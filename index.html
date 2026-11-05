@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moj Interaktivni Meni - OŠ Radlje ob Dravi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #2d3436;
+            margin: 0;
+            padding: 30px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .main-container {
+            background: white;
+            width: 100%;
+            max-width: 750px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: #1b1464;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 0.5px;
+        }
+        .header p {
+            margin: 8px 0 0 0;
+            color: #dcdde1;
+            font-size: 14px;
+        }
+        /* Navigacijski meni z gumbi */
+        .nav-tabs {
+            display: flex;
+            background: #f1f2f6;
+            border-bottom: 2px solid #dfe4ea;
+            flex-wrap: wrap;
+        }
+        .nav-tab {
+            flex: 1;
+            min-width: 110px;
+            padding: 14px 8px;
+            text-align: center;
+            background: #f1f2f6;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            color: #57606f;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .nav-tab:hover {
+            background: #dfe4ea;
+            color: #2f3640;
+        }
+        .nav-tab.active {
+            background: white;
+            color: #0984e3;
+            border-bottom: 3px solid #0984e3;
+        }
+        /* Vsebina strani (zavihki) */
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card-img {
+            width: 100%;
+            max-height: 260px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        h2 {
+            color: #1b1464;
+            margin-top: 0;
+        }
+        p {
+            line-height: 1.6;
+            color: #57606f;
+            font-size: 15px;
+        }
+        .highlight {
+            background: #ffeaa7;
+            padding: 3px 7px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #d63031;
+        }
+        /* Galerija sekcija */
+        .gallery-section {
+            margin-bottom: 25px;
+        }
+        .gallery-section h3 {
+            color: #0984e3;
+            border-bottom: 2px solid #f1f2f6;
+            padding-bottom: 5px;
+            margin-bottom: 12px;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .gallery-grid img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .gallery-grid img:hover {
+            transform: scale(1.02);
+        }
+        /* Stili za igro Tetris */
+        .game-box {
+            background: #111;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 15px;
+        }
+        canvas {
+            background: #222;
+            display: block;
+            margin: 0 auto;
+            border: 2px solid #555;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .tetris-btn {
+            background: #0984e3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .tetris-btn:hover {
+            background: #74b9ff;
+        }
+        .footer {
+            background: #f1f2f6;
+            text-align: center;
+            padding: 14px;
+            font-size: 13px;
+            color: #718093;
+            border-top: 1px solid #dfe4ea;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Glava -->
+        <div class="header">
+            <h1>Moj Osebni Svet</h1>
+            <p>Nogomet, šola, slastni burgerji in Tetris!</p>
+        </div>
+
+        <!-- Meni z gumbi -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="openTab(event, 'o-meni')">O meni</button>
+            <button class="nav-tab" onclick="openTab(event, 'sola')">Šola</button>
+            <button class="nav-tab" onclick="openTab(event, 'galerija')">Galerija</button>
+            <button class="nav-tab" onclick="openTab(event, 'igrice')">Tetris</button>
+        </div>
+
+        <!-- Zavihek 1: O meni in Klub -->
+        <div id="o-meni" class="tab-content active">
+            <h2>⚽ O meni in NK Radlje ob Dravi</h2>
+            <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=600&auto=format&fit=crop" alt="Pes na gugalnici" class="card-img">
+            <p>Pozdravljen! Zelo rad igram in treniram nogomet. Moj domači klub je <span class="highlight">NK Radlje ob Dravi</span>, kjer z ekipo pridno treniramo, se borimo na igrišču in uživamo v vsaki tekmi.</p>
+            <p>Ko se utrudim od treningov, teka in obveznosti, pa se z veseljem okrepčam z dobro hrano – obožujem sočne <span class="highlight">hamburgerje</span>!</p>
+        </div>
+
+        <!-- Zavihek 2: Šola -->
+        <div id="sola" class="tab-content">
+            <h2>🏫 OŠ Radlje ob Dravi</h2>
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600&auto=format&fit=crop" alt="Šola zgradba" class="card-img">
+            
+            <p>Osnovna šola Radlje ob Dravi spada med srednje velike osnovne šole v Republiki Sloveniji. Skupaj s podružnicami in vrtcem jo obiskuje <span class="highlight">več kot 700 otrok</span> iz občine Radlje ob Dravi in okoliških občin. Skupno šola zaposluje več kot 100 oseb.</p>
+            
+            <p>Osnovna šola Radlje ob Dravi je bila nazadnje dograjena in obnovljena leta 2005, v letu 2010 so tik ob šoli zgradili še novo športno dvorano. Šola je dobro opremljena s sodobnimi učnimi pripomočki. V 95 % učilnic je montiran digitalni projektor in v polovici teh še interaktivna tabla. Vsi učitelji in vzgojiteljice imajo za uspešno delo na voljo prenosne računalnike. Šola je v internet že več let povezana s hitro optično povezavo in ima na vseh enotah brezžično omrežje.</p>
+            
+            <p>Poleg matične šole spadata k šoli še podružnici <span class="highlight">Remšnik</span> in <span class="highlight">Vuhred</span> ter vrtec pri Osnovni šoli Radlje ob Dravi skupaj z enoto Vuhred.</p>
+        </div>
+
+        <!-- Zavihek 3: Galerija (Posodobljeno za OŠ Radlje in NK Radlje) -->
+        <div id="galerija" class="tab-content">
+            <h2>📸 Moja Galerija slik</h2>
+            <p>Tukaj so zbrane slike moje šole, nogometnega kluba in najljubše hrane!</p>
+            
+            <!-- Slike šole - OŠ Radlje ob Dravi -->
+            <div class="gallery-section">
+                <h3>🏫 OŠ Radlje ob Dravi</h3>
+                <div class="gallery-grid">
+                    <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=500&auto=format&fit=crop" alt="OŠ Radlje ob Dravi - Zgradba in okolica">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=500&auto=format&fit=crop" alt="Šolska športna dvorana in učenje">
+                </div>
+            </div>
+
+            <!-- Slike NK Radlje - Nogometni klub -->
+            <div class="gallery-section">
+                <h3>⚽ NK Radlje ob Dravi</h3>
+                <div class="gallery-grid">
+                    <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=500&auto=format&fit=crop" alt="NK Radlje - Nogometno igrišče">
+                    <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=500&auto=format&fit=crop" alt="NK Radlje - Trening in oprema">
+                </div>
+            </div>
+
+            <!-- Slike Hamburgerjev -->
+            <div class="gallery-section">
+                <h3>🍔 Slastni hamburgerji</h3>
+                <div class="gallery-grid">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500&auto=format&fit=crop" alt="Sočen hamburger">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=500&auto=format&fit=crop" alt="Hamburger s krompirčkom">
+                </div>
+            </div>
+        </div>
+
+        <!-- Zavihek 4: Igra Tetris -->
+        <div id="igrice" class="tab-content">
+            <h2>🧱 Mini Tetris Igra</h2>
+            <p>Zabavaj se s klasično igro Tetris med odmori!</p>
+            
+            <div class="game-box">
+                <p id="score" style="margin: 0 0 10px 0; font-weight: bold; color: #74b9ff;">Točke: 0</p>
+                <canvas id="tetris" width="240" height="360"></canvas>
+                <div>
+                    <button class="tetris-btn" onclick="startGame()">Zaženi / Ponastavi</button>
+                </div>
+                <p style="font-size: 11px; color: #aaa; margin-top: 10px;">Tipke: Levo/Desno za premik, Dol za hitrejši padec, Gor za vrtenje.</p>
+            </div>
+        </div>
+
+        <!-- Noga -->
+        <div class="footer">
+            Narejeno za Notepad++ &bull; Uživaj ob uporabi!
+        </div>
+    </div>
+
+    <!-- JavaScript koda za zavihke in Tetris -->
+    <script>
+        function openTab(evt, tabName) {
+            let contents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("active");
+            }
+            let tabs = document.getElementsByClassName("nav-tab");
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // --- TETRIS LOGIKA ---
+        const canvas = document.getElementById('tetris');
+        const context = canvas.getContext('2d');
+        context.scale(20, 20);
+
+        function arenaSweep() {
+            let rowCount = 1;
+            outer: for (let y = arena.length - 1; y > 0; --y) {
+                for (let x = 0; x < arena[y].length; ++x) {
+                    if (arena[y][x] === 0) {
+                        continue outer;
+                    }
+                }
+                const row = arena.splice(y, 1)[0].fill(0);
+                arena.unshift(row);
+                ++y;
+                player.score += rowCount * 10;
+                rowCount *= 2;
+            }
+            updateScore();
+        }
+
+        function collide(arena, player) {
+            const m = player.matrix;
+            const o = player.pos;
+            for (let y = 0; y < m.length; ++y) {
+                for (let x = 0; x < m[y].length; ++x) {
+                    if (m[y][x] !== 0 &&
+                       (arena[y + o.y] && arena[y + o.y][x + o.x]) !== 0) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function createMatrix(w, h) {
+            const matrix = [];
+            while (h--) {
+                matrix.push(new Array(w).fill(0));
+            }
+            return matrix;
+        }
+
+        function createPiece(type) {
+            if (type === 'T') {
+                return [
+                    [0, 0, 0],
+                    [1, 1, 1],
+                    [0, 1, 0],
+                ];
+            } else if (type === 'O') {
+                return [
+                    [2, 2],
+                    [2, 2],
+                ];
+            } else if (type === 'L') {
+                return [
+                    [0, 3, 0],
+                    [0, 3, 0],
+                    [0, 3, 3],
+                ];
+            } else if (type === 'J') {
+                return [
+                    [0, 4, 0],
+                    [0, 4, 0],
+                    [4, 4, 0],
+                ];
+            } else if (type === 'I') {
+                return [
+                    [0, 5, 0, 0],
+                    [0, 5, 0, 0],
+                    [0, 5, 0, 0],
+                    [0, 5, 0, 0],
+                ];
+            } else if (type === 'S') {
+                return [
+                    [0, 6, 6],
+                    [6, 6, 0],
+                    [0, 0, 0],
+                ];
+            } else if (type === 'Z') {
+                return [
+                    [7, 7, 0],
+                    [0, 7, 7],
+                    [0, 0, 0],
+                ];
+            }
+        }
+
+        const colors = [
+            null,
+            '#FF0d72',
+            '#0dc2ff',
+            '#0dff72',
+            '#f538ff',
+            '#ff8e0d',
+            '#ffe138',
+            '#3877ff',
+        ];
+
+        function drawMatrix(matrix, offset) {
+            matrix.forEach((row, y) => {
+                row.forEach((value, x) => {
+                    if (value !== 0) {
+                        context.fillStyle = colors[value];
+                        context.fillRect(x + offset.x, y + offset.y, 1, 1);
+                    }
+                });
+            });
+        }
+
+        function draw() {
+            context.fillStyle = '#000';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawMatrix(arena, {x: 0, y: 0});
+            drawMatrix(player.matrix, player.pos);
+        }
+
+        function merge(arena, player) {
+            player.matrix.forEach((row, y) => {
+                row.forEach((value, x) => {
+                    if (value !== 0) {
+                        arena[y + player.pos.y][x + player.pos.x] = value;
+                    }
+                });
+            });
+        }
+
+        function rotate(matrix, dir) {
+            for (let y = 0; y < matrix.length; ++y) {
+                for (let x = 0; x < y; ++x) {
+                    [
+                        matrix[x][y],
+                        matrix[y][x],
+                    ] = [
+                        matrix[y][x],
+                        matrix[x][y],
+                    ];
+                }
+            }
+            if (dir > 0) {
+                matrix.forEach(row => row.reverse());
+            } else {
+                matrix.reverse();
+            }
+        }
+
+        function playerDrop() {
+            player.pos.y++;
+            if (collide(arena, player)) {
+                player.pos.y--;
+                merge(arena, player);
+                playerReset();
+                arenaSweep();
+            }
+            dropCounter = 0;
+        }
+
+        function playerMove(dir) {
+            player.pos.x += dir;
+            if (collide(arena, player)) {
+                player.pos.x -= dir;
+            }
+        }
+
+        function playerReset() {
+            const pieces = 'TJLOSZI';
+            player.matrix = createPiece(pieces[(pieces.length * Math.random()) | 0]);
+            player.pos.y = 0;
+            player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
+            if (collide(arena, player)) {
+                arena.forEach(row => row.fill(0));
+                player.score = 0;
+                updateScore();
+            }
+        }
+
+        function playerRotate(dir) {
+            const posX = player.pos.x;
+            let offset = 1;
+            rotate(player.matrix, dir);
+            while (collide(arena, player)) {
+                player.pos.x += offset;
+                offset = -(offset + (offset > 0 ? 1 : -1));
+                if (offset > player.matrix[0].length) {
+                    rotate(player.matrix, -dir);
+                    player.pos.x = posX;
+                    return;
+                }
+            }
+        }
+
+        let dropCounter = 0;
+        let dropInterval = 1000;
+        let lastTime = 0;
+
+        function update(time = 0) {
+            const deltaTime = time - lastTime;
+            lastTime = time;
+            dropCounter += deltaTime;
+            if (dropCounter > dropInterval) {
+                playerDrop();
+            }
+            draw();
+            requestAnimationFrame(update);
+        }
+
+        function updateScore() {
+            document.getElementById('score').innerText = 'Točke: ' + player.score;
+        }
+
+        const arena = createMatrix(12, 18);
+
+        const player = {
+            pos: {x: 0, y: 0},
+            matrix: null,
+            score: 0,
+        };
+
+        document.addEventListener('keydown', event => {
+            if (event.keyCode === 37) {
+                playerMove(-1);
+            } else if (event.keyCode === 39) {
+                playerMove(1);
+            } else if (event.keyCode === 40) {
+                playerDrop();
+            } else if (event.keyCode === 81) {
+                playerRotate(-1);
+            } else if (event.keyCode === 87 || event.keyCode === 38) {
+                playerRotate(1);
+            }
+        });
+
+        function startGame() {
+            arena.forEach(row => row.fill(0));
+            player.score = 0;
+            playerReset();
+            updateScore();
+        }
+
+        playerReset();
+        updateScore();
+        update();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html> 
+
+<html> 
+
+<head> 
+
+<title>Moja spletna stran</title> 
+
+</head> 
+
+<body> 
+
+<!Zdravo> 
+
+Vsebina spletne strani. 
+
+</body> 
+
+</html> 

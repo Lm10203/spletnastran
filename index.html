@@ -51,12 +51,12 @@
         }
         .nav-tab {
             flex: 1;
-            min-width: 110px;
-            padding: 14px 8px;
+            min-width: 90px;
+            padding: 14px 6px;
             text-align: center;
             background: #f1f2f6;
             border: none;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             color: #57606f;
             cursor: pointer;
@@ -183,10 +183,11 @@
             <p>Nogomet, šola, slastni burgerji in Tetris!</p>
         </div>
 
-        <!-- Meni z gumbi -->
+        <!-- Meni z gumbi (dodan zavihek Maskota) -->
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="openTab(event, 'o-meni')">O meni</button>
             <button class="nav-tab" onclick="openTab(event, 'sola')">Šola</button>
+            <button class="nav-tab" onclick="openTab(event, 'maskota')">Maskota</button>
             <button class="nav-tab" onclick="openTab(event, 'galerija')">Galerija</button>
             <button class="nav-tab" onclick="openTab(event, 'igrice')">Tetris</button>
         </div>
@@ -211,7 +212,17 @@
             <p>Poleg matične šole spadata k šoli še podružnici <span class="highlight">Remšnik</span> in <span class="highlight">Vuhred</span> ter vrtec pri Osnovni šoli Radlje ob Dravi skupaj z enoto Vuhred.</p>
         </div>
 
-        <!-- Zavihek 3: Galerija (Posodobljeno za OŠ Radlje in NK Radlje) -->
+        <!-- Zavihek 3: Maskota (NOVO) -->
+        <div id="maskota" class="tab-content">
+            <h2>🦁 Moja Maskota</h2>
+            <img src="https://images.unsplash.com/photo-1534188753412-3e26d1d618d6?q=80&w=600&auto=format&fit=crop" alt="Maskota" class="card-img">
+            <p>Ime naše maskote je Petko! Je rumen z kraki na glavi.
+			Ko sem bil prvi razred me je na prvi dan šole pozdravil Petko in mi ponudil bonbone
+			</p>
+            <p>Je vedno polna energije, nasmejana in poskrbi za odlično vzdušje na tribunah ter med navijači kluba <span class="highlight">NK Radlje ob Dravi</span>.</p>
+        </div>
+
+        <!-- Zavihek 4: Galerija -->
         <div id="galerija" class="tab-content">
             <h2>📸 Moja Galerija slik</h2>
             <p>Tukaj so zbrane slike moje šole, nogometnega kluba in najljubše hrane!</p>
@@ -244,7 +255,7 @@
             </div>
         </div>
 
-        <!-- Zavihek 4: Igra Tetris -->
+        <!-- Zavihek 5: Igra Tetris -->
         <div id="igrice" class="tab-content">
             <h2>🧱 Mini Tetris Igra</h2>
             <p>Zabavaj se s klasično igro Tetris med odmori!</p>
